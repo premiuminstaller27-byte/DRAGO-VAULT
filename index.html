@@ -59,4 +59,46 @@ document.getElementById("adminBtn").addEventListener("click",()=>{document.getEl
 document.getElementById("searchBox").addEventListener("input",e=>{const q=e.target.value.toLowerCase();document.querySelectorAll("#lockedList .file-row,#fileList .file-row").forEach(r=>r.style.display=r.textContent.toLowerCase().includes(q)?"flex":"none")});
 renderLocked();renderFiles();
 </script>
+<div class="app-card">
+  <h2>▶ YouTube Pro</h2>
+  <p>Version: 5.6.80.399</p>
+  <p>📢 Advertisement</p>
+  <div class="ad-space">
+    Advertisement space
+  </div>
+  <a href="./YouTube_Pro_5.6.80.399.apk"
+     class="download-btn"
+     download>
+    ⬇ DOWNLOAD APK
+  </a>
+</div>
+<style>
+.app-card {
+  background: #071426;
+  border: 1px solid #00bfff;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 15px #008cff;
+}
+.ad-space {
+  background: #101c30;
+  border: 1px dashed #00bfff;
+  padding: 25px 10px;
+  margin: 15px 0;
+  color: #aaa;
+}
+.download-btn {
+  display: block;
+  background: #008cff;
+  color: white;
+  padding: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
 </body></html>
