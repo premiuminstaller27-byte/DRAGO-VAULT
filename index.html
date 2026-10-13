@@ -45,8 +45,21 @@ footer{border-top:1px solid #10375f;text-align:center;color:#86a9d1;padding:22px
 <footer>© 2026 Drago Vault · Blue Neon Dragon Edition</footer>
 <script>
 const apks=[
- {name:"CapCut Premium",url:"https://drive.google.com/uc?export=download&id=1qzrpWtwCdl3QcmiRvw9jGBwCmvN9gYdS",detail:"Premium APK"},
- {name:"JioHotstar Premium",url:"https://drive.google.com/uc?export=download&id=1JU7LOXGqNsMkZIJmv-cj1i7P-PRYpWCb",detail:"Premium APK"}
+ {
+   name:"CapCut Premium",
+   url:"https://drive.google.com/uc?export=download&id=1qzrpWtwCdl3QcmiRvw9jGBwCmvN9gYdS",
+   detail:"Premium APK"
+ },
+ {
+   name:"JioHotstar Premium",
+   url:"https://drive.google.com/uc?export=download&id=1JU7LOXGqNsMkZIJmv-cj1i7P-PRYpWCb",
+   detail:"Premium APK"
+ },
+ {
+   name:"YouTube Pro",
+   url:"./YouTube_Pro_5.6.80.399.apk",
+   detail:"Version 5.6.80.399"
+ }
 ];
 let demoUnlocked=true;
 function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id)?.classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(id==="files")renderFiles()}
