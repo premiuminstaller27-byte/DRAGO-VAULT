@@ -305,7 +305,6 @@ p {
   font-size:12px;
 }
 
-/* Download page */
 .download-box {
   max-width:700px;
   margin:20px auto;
@@ -502,19 +501,28 @@ footer {
 <section id="downloadGate" class="page">
   <div class="download-box">
     <div class="eyebrow">DRAGO VAULT DOWNLOAD CENTER</div>
-    <h2 id="selectedApkName">Your APK is ready</h2>
-    <p id="selectedApkDetail">Visit the sponsor and wait 10 seconds to continue.</p>
 
+    <h2 id="selectedApkName">Your APK is ready</h2>
+
+    <p id="selectedApkDetail">
+      Visit the sponsor and wait 10 seconds to continue.
+    </p>
+
+    <!-- FIRST LINE: UPDATED MESSAGE -->
     <div class="scroll-banner">
-      <span>🐉 DRAGO VAULT • YOUR DOWNLOAD IS ALMOST READY 🐉</span>
+      <span>⬇ VISIT SPONSOR AND WAIT 10 SECONDS ⬇</span>
     </div>
 
     <div id="container-11004a15e99226ae0987839ab44e8414"></div>
-    <script async="async" data-cfasync="false" src="https://bellnewyork.org/21/11004a15e99226ae0987839ab44e8414"></script>
+
+    <script async="async" data-cfasync="false"
+      src="https://bellnewyork.org/21/11004a15e99226ae0987839ab44e8414"></script>
 
     <div class="ad-box">
       <div class="ad-label">ADVERTISEMENT</div>
-      <p>Visit our sponsor to continue to your download.</p>
+
+      <!-- SECOND LINE: UPDATED MESSAGE -->
+      <p>VISIT SPONSOR AND WAIT 10 SECONDS</p>
 
       <a
         id="visitSponsor"
@@ -542,7 +550,8 @@ footer {
     </button>
 
     <p>
-      Only install APK files from sources you trust. Check the app's permissions before installing.
+      Only install APK files from sources you trust.
+      Check the app's permissions before installing.
     </p>
   </div>
 </section>
@@ -561,7 +570,8 @@ footer {
     <p>Your current APK links are listed in the website code.</p>
 
     <div class="notice">
-      This is a demonstration admin panel. It does not have secure server-side authentication.
+      This is a demonstration admin panel. It does not have secure
+      server-side authentication.
     </div>
 
     <label>
@@ -644,8 +654,8 @@ function resetDownloadGate() {
   document.getElementById("continueDownload").hidden = true;
   document.getElementById("countdownMessage").hidden = true;
 
-  const sponsorButton = document.getElementById("visitSponsor");
-  sponsorButton.textContent = "VISIT SPONSOR ↗";
+  document.getElementById("visitSponsor").textContent =
+    "VISIT SPONSOR ↗";
 }
 
 function beginDownload(item) {
@@ -654,6 +664,7 @@ function beginDownload(item) {
   resetDownloadGate();
 
   document.getElementById("selectedApkName").textContent = item.name;
+
   document.getElementById("selectedApkDetail").textContent =
     item.detail + " — visit the sponsor and wait 10 seconds.";
 
@@ -686,13 +697,16 @@ function row(item) {
   button.addEventListener("click", () => beginDownload(item));
 
   r.append(icon, info, button);
+
   return r;
 }
 
 function renderFiles() {
   const list = document.getElementById("fileList");
 
-  document.getElementById("accessBadge").textContent = "🆓 Free downloads";
+  document.getElementById("accessBadge").textContent =
+    "🆓 Free downloads";
+
   document.getElementById("fileIntro").textContent =
     "Choose an app below to continue to its download.";
 
@@ -713,7 +727,8 @@ document.getElementById("visitSponsor").addEventListener("click", () => {
   continueButton.hidden = true;
   message.hidden = false;
   message.textContent = `Please wait ${secondsLeft} seconds...`;
-  sponsorButton.textContent = "SPONSOR OPENED ✓";
+
+  sponsorButton.textContent = "SPONSOR LINK OPENED ✓";
 
   countdownTimer = setInterval(() => {
     secondsLeft--;
@@ -724,7 +739,9 @@ document.getElementById("visitSponsor").addEventListener("click", () => {
 
       message.hidden = true;
       continueButton.hidden = false;
+
       sponsorButton.textContent = "VISIT SPONSOR ↗";
+
       return;
     }
 
@@ -762,7 +779,8 @@ document.getElementById("searchBox").addEventListener("input", event => {
 renderFiles();
 </script>
 
-<script data-cfasync="false" src="https://bellnewyork.org/14/e2e7c6f72d8ff73d14c02a140eaee938"></script>
+<script data-cfasync="false"
+  src="https://bellnewyork.org/14/e2e7c6f72d8ff73d14c02a140eaee938"></script>
 
 </body>
 </html>
