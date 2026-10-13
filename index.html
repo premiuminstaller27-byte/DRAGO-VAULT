@@ -112,7 +112,6 @@ nav a:hover,.bottomnav a:hover { color:var(--cyan); }
   place-items:center;
 }
 
-/* Scrolling message */
 .scroll-banner {
   overflow:hidden;
   white-space:nowrap;
@@ -318,9 +317,7 @@ p {
   text-align:center;
 }
 
-.download-box h2 {
-  color:#55e4ff;
-}
+.download-box h2 { color:#55e4ff; }
 
 .ad-box {
   margin:25px 0;
@@ -337,9 +334,7 @@ p {
   margin-bottom:12px;
 }
 
-.ad-box p {
-  font-size:14px;
-}
+.ad-box p { font-size:14px; }
 
 .continue-button {
   width:100%;
@@ -347,6 +342,17 @@ p {
   margin:12px auto;
   padding:15px 20px;
   font-size:15px;
+}
+
+#continueDownload[hidden],
+#countdownMessage[hidden] {
+  display:none !important;
+}
+
+#countdownMessage {
+  color:#55e4ff;
+  font-weight:bold;
+  margin:15px 0;
 }
 
 .back-button {
@@ -459,9 +465,7 @@ footer {
   </div>
 </header>
 
-<!-- Scrolling message -->
-<div class="scroll-banner">
-</div>
+<div class="scroll-banner"></div>
 
 <main>
 
@@ -495,31 +499,39 @@ footer {
   </div>
 </section>
 
-<!-- Download page: ad section is between the message and Continue button -->
 <section id="downloadGate" class="page">
   <div class="download-box">
     <div class="eyebrow">DRAGO VAULT DOWNLOAD CENTER</div>
     <h2 id="selectedApkName">Your APK is ready</h2>
-    <p id="selectedApkDetail">Scroll down to continue.</p>
+    <p id="selectedApkDetail">Visit the sponsor and wait 10 seconds to continue.</p>
 
     <div class="scroll-banner">
-      <span>⬇ SCROLL DOWN TO CONTINUE • YOUR DOWNLOAD IS BELOW ⬇</span>
+      <span>🐉 DRAGO VAULT • YOUR DOWNLOAD IS ALMOST READY 🐉</span>
     </div>
-<div id="container-11004a15e99226ae0987839ab44e8414"></div>
-<script async="async" data-cfasync="false" src="https://bellnewyork.org/21/11004a15e99226ae0987839ab44e8414"></script>
+
+    <div id="container-11004a15e99226ae0987839ab44e8414"></div>
+    <script async="async" data-cfasync="false" src="https://bellnewyork.org/21/11004a15e99226ae0987839ab44e8414"></script>
+
     <div class="ad-box">
       <div class="ad-label">ADVERTISEMENT</div>
-      <p>Support Drago Vault by visiting our sponsor.</p>
+      <p>Visit our sponsor to continue to your download.</p>
+
       <a
+        id="visitSponsor"
         class="btn"
         href="https://asiafilm.org/4/b44caea6d53678821728d135c3d3b557"
         target="_blank"
         rel="noopener noreferrer"
-      >Visit Sponsor ↗</a>
-      <p class="mini">Opens in a new tab. Visiting the sponsor is optional.</p>
+      >VISIT SPONSOR ↗</a>
+
+      <p>After opening the sponsor link, return here.</p>
     </div>
 
-    <button id="continueDownload" class="btn continue-button">
+    <p id="countdownMessage" hidden aria-live="polite">
+      Please wait 10 seconds...
+    </p>
+
+    <button id="continueDownload" class="btn continue-button" hidden>
       ⬇ CONTINUE TO DOWNLOAD
     </button>
 
@@ -529,7 +541,7 @@ footer {
       ← Back to APK Files
     </button>
 
-    <p class="mini">
+    <p>
       Only install APK files from sources you trust. Check the app's permissions before installing.
     </p>
   </div>
@@ -563,7 +575,7 @@ footer {
     </label>
 
     <button class="btn" id="adminBtn">Open Demo Admin</button>
-    <p id="adminMsg" class="mini"></p>
+    <p id="adminMsg"></p>
   </div>
 </section>
 
@@ -600,6 +612,7 @@ const apks = [
 ];
 
 let selectedApk = null;
+let countdownTimer = null;
 
 function go(id) {
   document.querySelectorAll(".page").forEach(page => {
@@ -624,12 +637,25 @@ document.querySelectorAll("[data-goto]").forEach(button => {
   button.addEventListener("click", () => go(button.dataset.goto));
 });
 
+function resetDownloadGate() {
+  clearInterval(countdownTimer);
+  countdownTimer = null;
+
+  document.getElementById("continueDownload").hidden = true;
+  document.getElementById("countdownMessage").hidden = true;
+
+  const sponsorButton = document.getElementById("visitSponsor");
+  sponsorButton.textContent = "VISIT SPONSOR ↗";
+}
+
 function beginDownload(item) {
   selectedApk = item;
 
+  resetDownloadGate();
+
   document.getElementById("selectedApkName").textContent = item.name;
   document.getElementById("selectedApkDetail").textContent =
-    item.detail + " — scroll down and press Continue to download.";
+    item.detail + " — visit the sponsor and wait 10 seconds.";
 
   go("downloadGate");
 }
@@ -675,13 +701,43 @@ function renderFiles() {
   apks.forEach(item => list.append(row(item)));
 }
 
+document.getElementById("visitSponsor").addEventListener("click", () => {
+  if (countdownTimer !== null) return;
+
+  const continueButton = document.getElementById("continueDownload");
+  const message = document.getElementById("countdownMessage");
+  const sponsorButton = document.getElementById("visitSponsor");
+
+  let secondsLeft = 10;
+
+  continueButton.hidden = true;
+  message.hidden = false;
+  message.textContent = `Please wait ${secondsLeft} seconds...`;
+  sponsorButton.textContent = "SPONSOR OPENED ✓";
+
+  countdownTimer = setInterval(() => {
+    secondsLeft--;
+
+    if (secondsLeft <= 0) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+
+      message.hidden = true;
+      continueButton.hidden = false;
+      sponsorButton.textContent = "VISIT SPONSOR ↗";
+      return;
+    }
+
+    message.textContent = `Please wait ${secondsLeft} seconds...`;
+  }, 1000);
+});
+
 document.getElementById("continueDownload").addEventListener("click", () => {
   if (!selectedApk || !selectedApk.url) {
     alert("Please select an APK first.");
     return;
   }
 
-  // Continue directly to the selected download.
   window.location.href = selectedApk.url;
 });
 
@@ -693,19 +749,19 @@ document.getElementById("adminBtn").addEventListener("click", () => {
 document.getElementById("searchBox").addEventListener("input", event => {
   const query = event.target.value.trim().toLowerCase();
 
+  if (!document.getElementById("files").classList.contains("active")) {
+    go("files");
+  }
+
   document.querySelectorAll("#fileList .file-row").forEach(item => {
     item.style.display =
       item.textContent.toLowerCase().includes(query) ? "flex" : "none";
   });
-
-  if (!document.getElementById("files").classList.contains("active")) {
-    go("files");
-    document.getElementById("searchBox").value = event.target.value;
-  }
 });
 
 renderFiles();
 </script>
+
 <script data-cfasync="false" src="https://bellnewyork.org/14/e2e7c6f72d8ff73d14c02a140eaee938"></script>
 
 </body>
